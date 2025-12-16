@@ -2,7 +2,6 @@
 
 public class Day1
 {
-    private const char LeftDirection = 'L';
     private const char RightDirection = 'R';
 
     public static (int endpoint, int zeroEntrance) CalculateDialPosition(

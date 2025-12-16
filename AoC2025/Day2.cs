@@ -2,7 +2,9 @@
 
 public class Day2
 {
-    public static ulong GetInvalidSum(List<(ulong from, ulong to)> ranges)
+    #region Part1
+
+    public static ulong SumValuesWithRepeatedHalf(List<(ulong from, ulong to)> ranges)
     {
         ulong sum = 0;
 
@@ -10,7 +12,7 @@ public class Day2
         {
             for (var position = range.from; position <= range.to; position++)
             {
-                if(IsInvalid(position))
+                if (HasRepeatedHalf(position))
                     sum += position;
             }
         }
@@ -18,11 +20,63 @@ public class Day2
         return sum;
     }
 
-    private static bool IsInvalid(ulong value)
+    private static bool HasRepeatedHalf(ulong value)
     {
-        var s = value.ToString();
+        var valueAsString = value.ToString();
+        var half = valueAsString.Length / 2;
+
+        return valueAsString.Length % 2 == 0 && valueAsString[..half] == valueAsString[half..];
+    }
+
+    #endregion
+
+    #region Part2
+
+    public static ulong SumValuesWithRepeatedPrefixPattern(List<(ulong from, ulong to)> ranges)
+    {
+        ulong sum = 0;
+
+        foreach (var range in ranges)
+        {
+            for (var position = range.from; position <= range.to; position++)
+            {
+                if (HasRepeatedPrefixPattern(position))
+                    sum += position;
+            }
+        }
+
+        return sum;
+    }
+
+    private static bool HasRepeatedPrefixPattern(ulong value)
+    {
+        ReadOnlySpan<char> s = value.ToString();
         var half = s.Length / 2;
 
-        return s.Length % 2 == 0 && s[..half] == s[half..];
+        for (var patternLength = 1; patternLength <= half; patternLength++)
+        {
+            var pattern = s[..patternLength];
+
+            if (s.Length % patternLength != 0)
+                continue;
+
+            var isMatch = true;
+
+            for (var j = patternLength; j < s.Length; j += patternLength)
+            {
+                if (s.Slice(j, patternLength).SequenceEqual(pattern))
+                    continue;
+                
+                isMatch = false;
+                break;
+            }
+
+            if (isMatch)
+                return true;
+        }
+
+        return false;
     }
+
+    #endregion
 }
