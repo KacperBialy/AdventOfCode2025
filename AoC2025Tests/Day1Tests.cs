@@ -13,6 +13,7 @@ public class Day1Tests
         var result = Day1.CalculateDialPosition(input, 50);
 
         result.endpoint.Should().Be(5);
+        result.zeroEntrance.Should().Be(0);
     }
 
     [Fact]
@@ -23,6 +24,7 @@ public class Day1Tests
         var result = Day1.CalculateDialPosition(input, 43);
 
         result.endpoint.Should().Be(23);
+        result.zeroEntrance.Should().Be(4);
     }
 
     [Fact]
@@ -43,6 +45,7 @@ public class Day1Tests
         var result = Day1.CalculateDialPosition(input, 50);
 
         result.endpoint.Should().Be(18);
+        result.zeroEntrance.Should().Be(1);
     }
 
     [Fact]
@@ -62,5 +65,7 @@ public class Day1Tests
         var input = File.ReadAllLines("Day1/Day1.txt");
 
         var result = Day1.CalculateDialPosition(input, 50);
+        
+        result.zeroEntrance.Should().Be(6358);
     }
 }
