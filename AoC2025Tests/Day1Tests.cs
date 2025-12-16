@@ -62,7 +62,7 @@ public class Day1Tests
     [Fact]
     public void CalculateDialPosition_WhenDay1Input_ReturnsEntrance()
     {
-        var input = File.ReadAllLines("Day1/Day1.txt");
+        var input = File.ReadAllLines("Inputs/Day1/Day1.txt");
 
         var result = Day1.CalculateDialPosition(input, 50);
         
