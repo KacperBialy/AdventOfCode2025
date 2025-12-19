@@ -13,7 +13,7 @@ public class Day3Tests
     [InlineData("818181911112111", 92)]
     public void SumTotalJoltage_WhenOneBank_ReturnsCorrectSum(string bank, ulong expectedSum)
     {
-        var sum = Day3.SumTotalJoltage([bank]);
+        var sum = Day3.SumTotalJoltage([bank], 2);
 
         sum.Should().Be(expectedSum);
     }
@@ -23,8 +23,18 @@ public class Day3Tests
     {
         var banks = File.ReadAllLines("Inputs/Day3/Day3.txt");
         
-        var sum = Day3.SumTotalJoltage(banks);
+        var sum = Day3.SumTotalJoltage(banks, 2);
         
-        sum.Should().Be(0);
+        sum.Should().Be(16993);
+    }    
+    
+    [Fact]
+    public void SumTotalJoltage_WhenPart2Input_ReturnsCorrectSum()
+    {
+        var banks = File.ReadAllLines("Inputs/Day3/Day3.txt");
+        
+        var sum = Day3.SumTotalJoltage(banks, 12);
+        
+        sum.Should().Be(168617068915447);
     }
 }

@@ -2,30 +2,33 @@
 
 public class Day3
 {
-    public static ulong SumTotalJoltage(string[] banks)
+    public static ulong SumTotalJoltage(string[] banks, int numberOfJoltage)
     {
         ulong sum = 0;
+
         foreach (var bank in banks)
         {
-            var leftMax = ulong.MinValue;
-            var rightMax = ulong.MinValue;
+            var result = new List<char>();
+            var start = 0;
 
-            for (var i = 0; i < bank.Length - 1; i++)
+            for (var remaining = numberOfJoltage; remaining > 0; remaining--)
             {
-                var left = ulong.Parse(bank[i].ToString());
-                var right = ulong.Parse(bank[i + 1].ToString());
+                var maxValue = '0';
+                var end = bank.Length - remaining;
 
-                if (left > leftMax)
+                for (var i = start; i <= end; i++)
                 {
-                    leftMax = left;
-                    rightMax = right;
+                    if (maxValue < bank[i])
+                    {
+                        maxValue = bank[i];
+                        start = i + 1;
+                    }
                 }
 
-                if (right > rightMax)
-                    rightMax = right;
+                result.Add(maxValue);
             }
 
-            sum += ulong.Parse(leftMax.ToString() + rightMax);
+            sum += ulong.Parse(new string(result.ToArray()));
         }
 
         return sum;
