@@ -22,7 +22,7 @@ public class Day4Tests
             {'@', '.', '@', '.', '.', '@', '@', '@', '.', '@'}
         };
 
-        var result = Day4.CalculateAccessedRows(grid);
+        var result = Day4.CalculateAccessedRowsPart1(grid);
 
         result.Should().Be(13);
     }
@@ -41,7 +41,7 @@ public class Day4Tests
         for (var c = 0; c < cols; c++)
             grid[r, c] = lines[r][c];
 
-        var result = Day4.CalculateAccessedRows(grid);
+        var result = Day4.CalculateAccessedRowsPart1(grid);
 
         result.Should().Be(1604);
     }

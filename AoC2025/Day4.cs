@@ -31,7 +31,7 @@ public class Day4
         return count;
     }
 
-    public static int CalculateAccessedRows(char[,] grid)
+    public static int CalculateAccessedRowsPart1(char[,] grid)
     {
         var sum = 0;
 
