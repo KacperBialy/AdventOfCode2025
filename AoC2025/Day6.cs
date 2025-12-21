@@ -14,12 +14,17 @@ public class Day6
             {
                 operationSum = 1;
                 for (var i = 0; i < numbers.GetLength(0); i++)
+                {
+                    if (numbers[i, index] == 0)
+                        continue;
+                    
                     operationSum *= numbers[i, index];
+                }
             }
             else if (operation == '+')
             {
                 for (var i = 0; i < numbers.GetLength(0); i++)
-                    sum += numbers[i, index];
+                    operationSum += numbers[i, index];
             }
 
             sum += operationSum;
