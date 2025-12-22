@@ -5,8 +5,7 @@ public class Day7
     public static int CalculateNumberOfSplits(char[,] map, (int x, int y) start)
     {
         var rows = map.GetLength(0);
-        var cols= map.GetLength(1);
-        
+
         var points = new HashSet<(int x, int y)>()
         {
             start
@@ -19,9 +18,9 @@ public class Day7
         {
             foreach (var point in points)
             {
-                if(point.x + 1 > rows - 1 || (point.y + 1 > cols - 1 && point.y - 1 > 0))
+                if (point.x >= rows - 1)
                     continue;
-                
+
                 switch (map[point.x + 1, point.y])
                 {
                     case '.':
@@ -29,8 +28,8 @@ public class Day7
                         break;
                     case '^':
                         sum++;
-                        newPoints.Add((point.x + 1 , point.y - 1));
-                        newPoints.Add((point.x + 1, point.y + 1));               
+                        newPoints.Add((point.x + 1, point.y - 1));
+                        newPoints.Add((point.x + 1, point.y + 1));
                         break;
                 }
             }
@@ -44,4 +43,32 @@ public class Day7
 
         return sum;
     }
+ public static ulong CalculateNumberOfSplits2(char[,] map, (int x, int y) start)
+    {
+        var rows = map.GetLength(0);
+        var memo = new Dictionary<(int x, int y), ulong>();
+        
+        return Solve(start);
+
+        ulong Solve((int x, int y) point)
+        {
+            if (point.x >= rows)
+                return 1;
+
+            if (memo.TryGetValue(point, out var cached))
+                return cached;
+
+            ulong result = map[point.x, point.y] switch
+            {
+                '.' or 'S' => Solve((point.x + 1, point.y)),
+                '^' => Solve((point.x, point.y - 1)) + Solve((point.x, point.y + 1)),
+                _ => 1
+            };
+
+            memo[point] = result;
+            return result;
+        }
+    }
+   
+
 }
