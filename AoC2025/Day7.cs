@@ -43,7 +43,8 @@ public class Day7
 
         return sum;
     }
- public static ulong CalculateNumberOfSplits2(char[,] map, (int x, int y) start)
+    
+ public static ulong CalculateTotalTachyonTimelines(char[,] map, (int x, int y) start)
     {
         var rows = map.GetLength(0);
         var memo = new Dictionary<(int x, int y), ulong>();

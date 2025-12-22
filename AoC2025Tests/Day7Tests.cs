@@ -69,7 +69,7 @@ public class Day7Tests
 
         var start = PrepareData(input, out var map);
         
-        var result = Day7.CalculateNumberOfSplits2(map, start);
+        var result = Day7.CalculateTotalTachyonTimelines(map, start);
 
         result.Should().Be(40);
     }
@@ -80,7 +80,7 @@ public class Day7Tests
         var input = File.ReadAllText("Inputs/Day7/Day7.txt");
         var start = PrepareData(input, out var map);
         
-        var result = Day7.CalculateNumberOfSplits2(map, start);
+        var result = Day7.CalculateTotalTachyonTimelines(map, start);
 
         result.Should().Be(27055852018812);
     }
