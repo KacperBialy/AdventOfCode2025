@@ -70,6 +70,4 @@ public class Day7
             return result;
         }
     }
-   
-
 }
