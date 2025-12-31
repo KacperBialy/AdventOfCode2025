@@ -43,9 +43,9 @@ public class Day8Tests
             [425, 690, 689]
         ];
 
-        var result = Day8.Calculate(vectors, 10);
+        var result = Day8.Calculate(vectors);
 
-        result.Should().Be(40);
+        result.Should().Be(25272);
     }
 
     [Fact]
@@ -64,8 +64,8 @@ public class Day8Tests
             list.Add([x, y, z]);
         }
 
-        var result = Day8.Calculate(list.ToArray(), 1000);
+        var result = Day8.Calculate(list.ToArray());
         
-        result.Should().Be(122430);
+        result.Should().Be(8135565324);
     }
 }

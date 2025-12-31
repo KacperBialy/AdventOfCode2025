@@ -2,7 +2,7 @@
 
 public class Day8
 {
-    public static long Calculate(int[][] vectors, int n)
+    public static long Calculate(int[][] vectors)
     {
         var priorityQueue = new PriorityQueue<(int[] vectorA, int[] vectorB), long>();
 
@@ -21,7 +21,7 @@ public class Day8
         }
 
         var neighbours = new Dictionary<int[], List<int[]>>();
-        for (var i = 0; i < n; i++)
+        for (var i = 0; i < priorityQueue.Count; i++)
         {
             var (vectorA, vectorB) = priorityQueue.Dequeue();
 
@@ -33,44 +33,40 @@ public class Day8
 
             neighbours[vectorA].Add(vectorB);
             neighbours[vectorB].Add(vectorA);
-        }
 
-        var sums = new List<int>();
-        var visited = new HashSet<int[]>();
-
-        foreach (var startNode in vectors)
-        {
-            if (visited.Contains(startNode))
-                continue;
-
-            var stack = new Stack<int[]>();
-            stack.Push(startNode);
-            visited.Add(startNode);
-
-            var sum = 0;
-            while (stack.Count > 0)
+            var visited = new HashSet<int[]>();
+            foreach (var startNode in vectors)
             {
-                var currentNode = stack.Pop();
+                if (visited.Contains(startNode))
+                    continue;
 
-                if (!neighbours.TryGetValue(currentNode, out var neighbour))
-                    break;
+                var stack = new Stack<int[]>();
+                stack.Push(startNode);
+                visited.Add(startNode);
 
-                sum++;
-                
-                foreach (var neighbor in neighbour)
+                var sum = 0;
+                while (stack.Count > 0)
                 {
-                    if (visited.Add(neighbor))
-                        stack.Push(neighbor);
-                }
-            }
+                    var currentNode = stack.Pop();
 
-            sums.Add(sum);
+                    if (!neighbours.TryGetValue(currentNode, out var neighbour))
+                        break;
+
+                    sum++;
+
+                    foreach (var neighbor in neighbour)
+                    {
+                        if (visited.Add(neighbor))
+                            stack.Push(neighbor);
+                    }
+                }
+                
+                if(sum == vectors.Length)
+                    return (long)vectorA[0] * vectorB[0];
+            }
         }
 
-        return sums.OrderByDescending(s => s)
-            .Take(3)
-            .Select(s => (long)s)
-            .Aggregate((x, y) => x * y);
+        return -1;
     }
 
     public static long CalculateDistance(int[] vectorA, int[] vectorB)
@@ -78,7 +74,7 @@ public class Day8
         long dx = vectorA[0] - vectorB[0];
         long dy = vectorA[1] - vectorB[1];
         long dz = vectorA[2] - vectorB[2];
-    
+
         return dx * dx + dy * dy + dz * dz;
     }
 }
