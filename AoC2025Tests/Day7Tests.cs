@@ -1,7 +1,7 @@
 ﻿using AoC2025;
 using FluentAssertions;
 
-namespace TestProject1;
+namespace AoC2025Tests;
 
 public class Day7Tests
 {
