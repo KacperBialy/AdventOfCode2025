@@ -6,10 +6,17 @@ namespace AoC2025Tests;
 public class Day11Tests
 {
     [Fact]
-    public void Day11_WhenPart1Input_ReturnsCorrectResult()
+    public void Day11_WhenPart2Input_ReturnsCorrectResult()
+    {
+        var result = Day11.Calculate("svr", "out", PrepareData());
+
+        result.Should().Be(393474305030400);
+    }
+
+    private static Dictionary<string, string[]> PrepareData()
     {
         Dictionary<string, string[]> connections = new();
-        
+
         var lines = File.ReadAllLines("Inputs/Day11/Day11.txt");
         foreach (var line in lines)
         {
@@ -19,8 +26,6 @@ public class Day11Tests
             connections[key] = values;
         }
 
-        var result = Day11.CalculateNumberOfPaths("you", "out", connections);
-
-        result.Should().Be(599);
+        return connections;
     }
 }
