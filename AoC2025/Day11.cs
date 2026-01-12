@@ -2,33 +2,56 @@
 
 public class Day11
 {
-    public static ulong CalculateNumberOfPaths(string start, string end, Dictionary<string, string[]> connections)
+    [Flags]
+    private enum RequiredNodes
     {
-        var visited = new HashSet<string>();
-        return CountPathsRecursive(start, end, connections, visited);
+        None = 0,
+        Dac = 1 << 0,
+        Fft = 1 << 1,
+        Both = Dac | Fft
     }
 
-    private static ulong CountPathsRecursive(string current, string end, Dictionary<string, string[]> connections, HashSet<string> visited)
+    public static ulong Calculate(string start, string end, Dictionary<string, string[]> graph)
     {
-        if (current == end)
-            return 1;
+        var memo = new Dictionary<(string node, RequiredNodes mask), ulong>();
+        var visited = new HashSet<string>();
 
-        visited.Add(current);
+        return Solve(start, 0);
 
-        ulong count = 0;
-        if (connections.TryGetValue(current, out var connection))
+        ulong Solve(string curr, RequiredNodes mask)
         {
-            foreach (var neighbor in connection)
+            if (curr == nameof(RequiredNodes.Dac).ToLower())
+                mask |= RequiredNodes.Dac;
+
+            if (curr == nameof(RequiredNodes.Fft).ToLower())
+                mask |= RequiredNodes.Fft;
+
+            if (curr == end)
             {
-                if (!visited.Contains(neighbor))
+                return mask == RequiredNodes.Both
+                    ? 1UL
+                    : 0UL;
+            }
+
+            var key = (curr, mask);
+            if (memo.TryGetValue(key, out var val))
+                return val;
+
+            visited.Add(curr);
+            ulong count = 0;
+
+            if (graph.TryGetValue(curr, out var neighbors))
+            {
+                foreach (var n in neighbors)
                 {
-                    count += CountPathsRecursive(neighbor, end, connections, visited);
+                    if (!visited.Contains(n))
+                        count += Solve(n, mask);
                 }
             }
+
+            visited.Remove(curr);
+
+            return memo[key] = count;
         }
-
-        visited.Remove(current);
-
-        return count;
     }
 }
